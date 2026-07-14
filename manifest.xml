@@ -4,7 +4,7 @@
   <Version>1.0.0.0</Version>
   <ProviderName>Contoso</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
-  <DisplayName DefaultValue="CloudSaveAddin"/>
+  <DisplayName DefaultValue="PPTX 구조분석"/>
   <Description DefaultValue="A template to get started."/>
   <IconUrl DefaultValue="https://Techevansh.github.io/cloudsave/assets/icon-32.png"/>
   <HighResolutionIconUrl DefaultValue="https://Techevansh.github.io/cloudsave/assets/icon-64.png"/>
@@ -73,8 +73,8 @@
       </bt:Urls>
       <bt:ShortStrings>
         <bt:String id="GetStarted.Title" DefaultValue="Get started with your sample add-in!"/>
-        <bt:String id="CommandsGroup.Label" DefaultValue="Commands Group"/>
-        <bt:String id="TaskpaneButton.Label" DefaultValue="Cloud add"/>
+        <bt:String id="CommandsGroup.Label" DefaultValue="구조 분석"/>
+        <bt:String id="TaskpaneButton.Label" DefaultValue="구조 분석기"/>
       </bt:ShortStrings>
       <bt:LongStrings>
         <bt:String id="GetStarted.Description" DefaultValue="Your sample add-in loaded successfully. Go to the HOME tab and click the 'Show Task Pane' button to get started."/>
