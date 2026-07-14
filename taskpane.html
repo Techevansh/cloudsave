@@ -1,1 +1,112 @@
-<!doctype html><html lang="ko"><head><meta charset="UTF-8"/><meta http-equiv="X-UA-Compatible" content="IE=Edge"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Cloud Save</title><script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script><style>:root{--fg:var(--color-body-foreground, #333);--fg-dim:var(--color-body-foreground-secondary, #666);--border:var(--color-body-divider, #ddd)}@media (prefers-color-scheme:dark){:root{--fg:var(--color-body-foreground, #f3f3f3);--fg-dim:var(--color-body-foreground-secondary, #c8c8c8);--border:var(--color-body-divider, #5a5a5a)}}body{margin:0;font-family:'Segoe UI',-apple-system,sans-serif;color:var(--fg);background:0 0}.wrap{padding:20px}h2{margin:0 0 6px 0;color:var(--fg)}.subtitle{font-size:13px;color:var(--fg-dim);margin:0 0 16px 0}#sync{padding:14px;width:100%;font-size:15px;font-weight:600;background:#0078d4;color:#fff;border:none;border-radius:4px;cursor:pointer}#sync:hover:not(:disabled){background:#106ebe}#sync:disabled{background:#6c757d;cursor:default}.options{margin-top:16px;padding-top:12px;border-top:1px solid var(--border)}.options label{display:block;font-size:13px;color:var(--fg);margin-bottom:6px;cursor:pointer}#status{margin-top:16px;font-size:13px;color:var(--fg);line-height:1.7;max-height:320px;overflow-y:auto}</style><script defer="defer" src="polyfill.js"></script><script defer="defer" src="taskpane.js"></script></head><body><div class="wrap"><h2>Cloud Save</h2><p class="subtitle">OneDrive와 Google Drive에 동시 저장합니다.</p><button id="sync">☁️ 클라우드에 저장</button><div class="options"><label><input type="checkbox" id="use-onedrive" checked="checked"/> OneDrive</label> <label><input type="checkbox" id="use-google" checked="checked"/> Google Drive</label></div><div id="status"></div></div></body></html>
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PPTX 구조 분석기</title>
+  <script type="text/javascript" src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+
+  <style>
+    /* Office 테마 변수 사용 → 다크/라이트 자동 대응 */
+    :root {
+      --fg: var(--color-body-foreground, #333);
+      --fg-dim: var(--color-body-foreground-secondary, #666);
+      --border: var(--color-body-divider, #ddd);
+    }
+
+    /* 테마 API가 없는 환경 대비: OS 다크모드 기준 폴백 */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --fg: var(--color-body-foreground, #f3f3f3);
+        --fg-dim: var(--color-body-foreground-secondary, #c8c8c8);
+        --border: var(--color-body-divider, #5a5a5a);
+      }
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', -apple-system, sans-serif;
+      color: var(--fg);
+      background: transparent;
+    }
+
+    .wrap {
+      padding: 20px;
+    }
+
+    h2 {
+      margin: 0 0 6px 0;
+      color: var(--fg);
+    }
+
+    .subtitle {
+      font-size: 13px;
+      color: var(--fg-dim);
+      margin: 0 0 16px 0;
+    }
+
+    #sync {
+      padding: 14px;
+      width: 100%;
+      font-size: 15px;
+      font-weight: 600;
+      background: #0078d4;
+      color: #ffffff;      /* 파란 버튼 위 글자는 항상 흰색 고정 */
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    #sync:hover:not(:disabled) {
+      background: #106ebe;
+    }
+
+    #sync:disabled {
+      background: #6c757d;
+      cursor: default;
+    }
+
+    .options {
+      margin-top: 16px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+    }
+
+    .options label {
+      display: block;
+      font-size: 13px;
+      color: var(--fg);      /* ← 체크박스 글자도 테마 색상 */
+      margin-bottom: 6px;
+      cursor: pointer;
+    }
+
+    #status {
+      margin-top: 16px;
+      font-size: 13px;
+      color: var(--fg);      /* ← 로그 글자도 테마 색상 */
+      line-height: 1.7;
+      max-height: 320px;
+      overflow-y: auto;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <h2>PPTX 구조 분석기</h2>
+    <p class="subtitle">슬라이드 구성과 레이아웃 정합성을 검사합니다.</p>
+
+    <button id="sync">🔍 구조 분석 시작</button>
+
+    <div class="options">
+      <label><input type="checkbox" id="use-onedrive" checked /> 레이아웃 정합성 검사</label>
+      <label><input type="checkbox" id="use-google" checked /> 슬라이드 관계 분석</label>
+    </div>
+
+    <div id="status"></div>
+  </div>
+</body>
+
+</html>

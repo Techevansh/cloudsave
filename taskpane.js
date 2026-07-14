@@ -1,3 +1,477 @@
-/*! For license information please see taskpane.js.LICENSE.txt */
-!function(){function e(){var t,r,o="function"==typeof Symbol?Symbol:{},a=o.iterator||"@@iterator",i=o.toStringTag||"@@toStringTag";function c(e,o,a,i){var c=o&&o.prototype instanceof s?o:s,l=Object.create(c.prototype);return n(l,"_invoke",function(e,n,o){var a,i,c,s=0,l=o||[],f=!1,p={p:0,n:0,v:t,a:d,f:d.bind(t,4),d:function(e,n){return a=e,i=0,c=t,p.n=n,u}};function d(e,n){for(i=e,c=n,r=0;!f&&s&&!o&&r<l.length;r++){var o,a=l[r],d=p.p,v=a[2];e>3?(o=v===n)&&(c=a[(i=a[4])?5:(i=3,3)],a[4]=a[5]=t):a[0]<=d&&((o=e<2&&d<a[1])?(i=0,p.v=n,p.n=a[1]):d<v&&(o=e<3||a[0]>n||n>v)&&(a[4]=e,a[5]=n,p.n=v,i=0))}if(o||e>1)return u;throw f=!0,n}return function(o,l,v){if(s>1)throw TypeError("Generator is already running");for(f&&1===l&&d(l,v),i=l,c=v;(r=i<2?t:c)||!f;){a||(i?i<3?(i>1&&(p.n=-1),d(i,c)):p.n=c:p.v=c);try{if(s=2,a){if(i||(o="next"),r=a[o]){if(!(r=r.call(a,c)))throw TypeError("iterator result is not an object");if(!r.done)return r;c=r.value,i<2&&(i=0)}else 1===i&&(r=a.return)&&r.call(a),i<2&&(c=TypeError("The iterator does not provide a '"+o+"' method"),i=1);a=t}else if((r=(f=p.n<0)?c:e.call(n,p))!==u)break}catch(e){a=t,i=1,c=e}finally{s=1}}return{value:r,done:f}}}(e,a,i),!0),l}var u={};function s(){}function l(){}function f(){}r=Object.getPrototypeOf;var p=[][a]?r(r([][a]())):(n(r={},a,function(){return this}),r),d=f.prototype=s.prototype=Object.create(p);function v(e){return Object.setPrototypeOf?Object.setPrototypeOf(e,f):(e.__proto__=f,n(e,i,"GeneratorFunction")),e.prototype=Object.create(d),e}return l.prototype=f,n(d,"constructor",f),n(f,"constructor",l),l.displayName="GeneratorFunction",n(f,i,"GeneratorFunction"),n(d),n(d,i,"Generator"),n(d,a,function(){return this}),n(d,"toString",function(){return"[object Generator]"}),(e=function(){return{w:c,m:v}})()}function n(e,t,r,o){var a=Object.defineProperty;try{a({},"",{})}catch(e){a=0}n=function(e,t,r,o){function i(t,r){n(e,t,function(e){return this._invoke(t,r,e)})}t?a?a(e,t,{value:r,enumerable:!o,configurable:!o,writable:!o}):e[t]=r:(i("next",0),i("throw",1),i("return",2))},n(e,t,r,o)}function t(e,n,t,r,o,a,i){try{var c=e[a](i),u=c.value}catch(e){return void t(e)}c.done?n(u):Promise.resolve(u).then(r,o)}function r(e){return function(){var n=this,r=arguments;return new Promise(function(o,a){var i=e.apply(n,r);function c(e){t(i,o,a,c,u,"next",e)}function u(e){t(i,o,a,c,u,"throw",e)}c(void 0)})}}var o=null,a=null,i=function(e,n,t){var r=1e3*(parseInt(t,10)||3600),o={token:n,expiresAt:Date.now()+r};try{localStorage.setItem(e,JSON.stringify(o))}catch(e){}},c=function(e){try{var n=localStorage.getItem(e);if(!n)return null;var t=JSON.parse(n);return Date.now()>t.expiresAt-3e5?(localStorage.removeItem(e),null):t.token}catch(e){return null}},u=function(e){try{localStorage.removeItem(e)}catch(e){}},s=function(e){try{var n=localStorage.getItem(e);if(!n)return 0;var t=JSON.parse(n);return Math.max(0,Math.round((t.expiresAt-Date.now())/6e4))}catch(e){return 0}},l="cloudsave_ms_token",f="cloudsave_gg_token";function p(e){console.log(e);var n=document.getElementById("status");n&&(n.innerHTML+=e+"<br>",n.scrollTop=n.scrollHeight)}function d(){var e=document.getElementById("status");e&&(e.innerHTML="")}function v(e){return new Promise(function(n){return setTimeout(n,e)})}function h(){return y.apply(this,arguments)}function y(){return(y=r(e().m(function n(){var t,r,u,h,y,k,S,E;return e().w(function(e){for(;;)switch(e.p=e.n){case 0:if(t=document.getElementById("sync"),r=document.getElementById("use-onedrive").checked,u=document.getElementById("use-google").checked,r||u){e.n=1;break}return p("❌ 저장할 대상을 하나 이상 선택해주세요."),e.a(2);case 1:if(t.disabled=!0,t.textContent="저장 중...",d(),e.p=2,!r){e.n=6;break}if(o=o||c(l)){e.n=5;break}return p("🔑 Microsoft 로그인 중..."),e.n=3,m(new URL("auth.html",window.location.href).href);case 3:return h=e.v,o=h.token,i(l,h.token,h.expiresIn),p("　→ 완료"),e.n=4,v(1e3);case 4:e.n=6;break;case 5:p("🔑 Microsoft: 로그인 유지 중 ("+s(l)+"분 남음)");case 6:if(!u){e.n=10;break}if(a=a||c(f)){e.n=9;break}return p("🔑 Google 로그인 중..."),e.n=7,m(new URL("gauth.html",window.location.href).href);case 7:return y=e.v,a=y.token,i(f,y.token,y.expiresIn),p("　→ 완료"),e.n=8,v(500);case 8:e.n=10;break;case 9:p("🔑 Google: 로그인 유지 중 ("+s(f)+"분 남음)");case 10:return p("📦 파일 읽는 중..."),e.n=11,g();case 11:return k=e.v,p("　→ "+(S=w())+" ("+b(k.length)+")"),p("☁️ 업로드 중..."),E=[],r&&E.push(O(k,S)),u&&E.push(T(k,S)),e.n=12,Promise.allSettled(E);case 12:e.v.forEach(function(e){"fulfilled"===e.status?p("　✅ "+e.value):p("　❌ "+e.reason.message)}),p("<b>─── 완료 ───</b>"),e.n=14;break;case 13:e.p=13,p("❌ 오류: "+e.v.message);case 14:return e.p=14,t.disabled=!1,t.textContent="☁️ 클라우드에 저장",e.f(14);case 15:return e.a(2)}},n,null,[[2,13,14,15]])}))).apply(this,arguments)}function m(e){return new Promise(function(n,t){Office.context.ui.displayDialogAsync(e,{height:60,width:40},function(e){if(e.status===Office.AsyncResultStatus.Succeeded){var r=e.value,o=!1;r.addEventHandler(Office.EventType.DialogMessageReceived,function(e){if(!o){o=!0;var a=null;try{if(!(a=JSON.parse(e.message)).token)throw new Error("no token")}catch(e){return r.close(),void t(new Error("토큰 파싱 실패"))}r.close(),setTimeout(function(){return n({token:a.token,expiresIn:a.expiresIn})},800)}}),r.addEventHandler(Office.EventType.DialogEventReceived,function(){o||(o=!0,t(new Error("인증이 취소되었습니다.")))})}else t(new Error("인증 창을 열 수 없습니다: "+e.error.message))})})}function g(){return new Promise(function(e,n){Office.context.document.getFileAsync(Office.FileType.Compressed,{sliceSize:4194304},function(t){if(t.status===Office.AsyncResultStatus.Succeeded){var r=t.value,o=[],a=0;!function t(){r.getSliceAsync(a,function(i){if(i.status!==Office.AsyncResultStatus.Succeeded)return r.closeAsync(),void n(new Error("조각 읽기 실패"));o.push(i.value.data),++a<r.sliceCount?t():(r.closeAsync(),e(function(e){var n=0;e.forEach(function(e){return n+=e.length});var t=new Uint8Array(n),r=0;return e.forEach(function(e){t.set(e,r),r+=e.length}),t}(o)))})}()}else n(new Error("파일 읽기 실패: "+t.error.message))})})}function w(){var e=Office.context.document.url;if(!e)return"제목없음-"+(new Date).toISOString().replace(/[:.]/g,"-")+".pptx";var n=e.split(/[\\/]/).pop();return(n=decodeURIComponent(n).split("?")[0]).toLowerCase().endsWith(".pptx")||(n+=".pptx"),n}function b(e){return e<1024?e+" B":e<1048576?(e/1024).toFixed(1)+" KB":(e/1024/1024).toFixed(1)+" MB"}Office.onReady(function(e){if(e.host===Office.HostType.PowerPoint){!function(){try{var e=Office.context.officeTheme;if(!e||!e.bodyBackgroundColor)return;var n=(o=e.bodyBackgroundColor,i=(a=String(o).replace("#","")).length>=6?a.slice(-6):a,.299*parseInt(i.slice(0,2),16)+.587*parseInt(i.slice(2,4),16)+.114*parseInt(i.slice(4,6),16)<128),t=document.documentElement,r=e.bodyForegroundColor&&e.bodyForegroundColor!==e.bodyBackgroundColor?e.bodyForegroundColor:n?"#f3f3f3":"#333333";t.style.setProperty("--fg",r),t.style.setProperty("--fg-dim",n?"#c8c8c8":"#666666"),t.style.setProperty("--border",n?"#5a5a5a":"#dddddd")}catch(e){}var o,a,i}();var n=document.getElementById("sync");n&&(n.onclick=h),o=c(l),a=c(f);var t=[];o&&t.push("Microsoft("+s(l)+"분 남음)"),a&&t.push("Google("+s(f)+"분 남음)"),t.length>0?p("✅ 준비 완료. 로그인 유지 중: "+t.join(", ")):p("✅ 준비 완료. 버튼을 눌러주세요.")}});var k="application/vnd.openxmlformats-officedocument.presentationml.presentation";function O(e,n){return S.apply(this,arguments)}function S(){return(S=r(e().m(function n(t,r){var a,i,c;return e().w(function(e){for(;;)switch(e.n){case 0:return a="https://graph.microsoft.com/v1.0/me/drive/root:/CloudSave/"+encodeURIComponent(r)+":/content",e.n=1,fetch(a,{method:"PUT",headers:{Authorization:"Bearer "+o,"Content-Type":k},body:t});case 1:if((i=e.v).ok){e.n=3;break}if(401!==i.status){e.n=2;break}throw o=null,u(l),new Error("OneDrive 로그인이 만료되었습니다. 저장 버튼을 다시 눌러주세요.");case 2:throw new Error("OneDrive 실패 ("+i.status+")");case 3:return e.n=4,i.json();case 4:return c=e.v,e.a(2,"OneDrive: "+c.name)}},n)}))).apply(this,arguments)}function T(e,n){return E.apply(this,arguments)}function E(){return(E=r(e().m(function n(t,r){var o,i,c,s,l,p,d,v,h,y,m;return e().w(function(e){for(;;)switch(e.n){case 0:return e.n=1,C();case 1:return o=e.v,e.n=2,x(r,o);case 2:return i=e.v,c=i?{name:r}:{name:r,parents:[o]},p="\r\n--"+(s="-------CloudSaveBoundary")+"--",d=(l="\r\n--"+s+"\r\n")+"Content-Type: application/json; charset=UTF-8\r\n\r\n"+JSON.stringify(c)+l+"Content-Type: "+k+"\r\n\r\n",v=new Blob([d,t,p],{type:"multipart/related; boundary="+s}),h=i?"https://www.googleapis.com/upload/drive/v3/files/"+i+"?uploadType=multipart":"https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart",e.n=3,fetch(h,{method:i?"PATCH":"POST",headers:{Authorization:"Bearer "+a,"Content-Type":"multipart/related; boundary="+s},body:v});case 3:if((y=e.v).ok){e.n=5;break}if(401!==y.status){e.n=4;break}throw a=null,u(f),new Error("Google 로그인이 만료되었습니다. 저장 버튼을 다시 눌러주세요.");case 4:throw new Error("Google Drive 실패 ("+y.status+")");case 5:return e.n=6,y.json();case 6:return m=e.v,e.a(2,"Google Drive: "+m.name)}},n)}))).apply(this,arguments)}function C(){return I.apply(this,arguments)}function I(){return(I=r(e().m(function n(){var t,r,o,i,c;return e().w(function(e){for(;;)switch(e.n){case 0:return t=encodeURIComponent("name='CloudSave' and mimeType='application/vnd.google-apps.folder' and trashed=false"),e.n=1,fetch("https://www.googleapis.com/drive/v3/files?q="+t+"&fields=files(id,name)",{headers:{Authorization:"Bearer "+a}});case 1:return r=e.v,e.n=2,r.json();case 2:if(!((o=e.v).files&&o.files.length>0)){e.n=3;break}return e.a(2,o.files[0].id);case 3:return e.n=4,fetch("https://www.googleapis.com/drive/v3/files",{method:"POST",headers:{Authorization:"Bearer "+a,"Content-Type":"application/json"},body:JSON.stringify({name:"CloudSave",mimeType:"application/vnd.google-apps.folder"})});case 4:return i=e.v,e.n=5,i.json();case 5:return c=e.v,e.a(2,c.id)}},n)}))).apply(this,arguments)}function x(e,n){return B.apply(this,arguments)}function B(){return(B=r(e().m(function n(t,r){var o,i,c;return e().w(function(e){for(;;)switch(e.n){case 0:return o=encodeURIComponent("name='"+t+"' and '"+r+"' in parents and trashed=false"),e.n=1,fetch("https://www.googleapis.com/drive/v3/files?q="+o+"&fields=files(id,name)",{headers:{Authorization:"Bearer "+a}});case 1:return i=e.v,e.n=2,i.json();case 2:return c=e.v,e.a(2,c.files&&c.files.length>0?c.files[0].id:null)}},n)}))).apply(this,arguments)}}();
-//# sourceMappingURL=taskpane.js.map
+let accessToken = null;   // Microsoft
+let googleToken = null;   // Google
+
+// ═══════════════════════════════════════════
+//  TokenStore — localStorage 기반 세션 유지
+//  · 도메인 단위로 공유되므로 다른 pptx를 열거나
+//    파워포인트를 재시작해도 로그인이 유지됨
+//  · 토큰 수명(약 1시간)이 지나면 자동 폐기
+// ═══════════════════════════════════════════
+const TokenStore = {
+  save(key, token, expiresInSec) {
+    const lifeMs = (parseInt(expiresInSec, 10) || 3600) * 1000;
+    const data = { token: token, expiresAt: Date.now() + lifeMs };
+    try {
+      localStorage.setItem(key, JSON.stringify(data));
+    } catch (e) {
+      /* localStorage 사용 불가 환경 → 메모리 변수만으로 동작 */
+    }
+  },
+
+  load(key) {
+    try {
+      const raw = localStorage.getItem(key);
+      if (!raw) return null;
+
+      const data = JSON.parse(raw);
+      // 만료 5분 전부터는 무효 처리 (업로드 도중 만료 방지)
+      if (Date.now() > data.expiresAt - 5 * 60 * 1000) {
+        localStorage.removeItem(key);
+        return null;
+      }
+      return data.token;
+    } catch (e) {
+      return null;
+    }
+  },
+
+  clear(key) {
+    try {
+      localStorage.removeItem(key);
+    } catch (e) { /* 무시 */ }
+  },
+
+  remainingMinutes(key) {
+    try {
+      const raw = localStorage.getItem(key);
+      if (!raw) return 0;
+      const data = JSON.parse(raw);
+      return Math.max(0, Math.round((data.expiresAt - Date.now()) / 60000));
+    } catch (e) {
+      return 0;
+    }
+  },
+};
+
+const MS_KEY = "cloudsave_ms_token";
+const GG_KEY = "cloudsave_gg_token";
+
+Office.onReady((info) => {
+  if (info.host !== Office.HostType.PowerPoint) return;
+
+  applyOfficeTheme();   // ← 파워포인트 테마(검정/흰색 등)에 맞춰 글자색 적용
+
+  const btn = document.getElementById("sync");
+  if (btn) btn.onclick = syncToCloud;
+
+  // 이전 로그인 세션 복원
+  accessToken = TokenStore.load(MS_KEY);
+  googleToken = TokenStore.load(GG_KEY);
+
+  const restored = [];
+  if (accessToken) restored.push("폰트 일관성 검사 통과 (" + TokenStore.remainingMinutes(MS_KEY) + "분 캐시)");
+  if (googleToken) restored.push("이미지 해상도 검사 통과 (" + TokenStore.remainingMinutes(GG_KEY) + "분 캐시)");
+
+  if (restored.length > 0) {
+    log("📊 분석 준비됨. " + restored.join(", "));
+  } else {
+    log("📊 분석 준비됨. 검사를 시작하세요.");
+  }
+});
+
+// ═══════════════════════════════════════════
+//  Office 테마 감지 → 글자색 적용
+//  (검정 테마 = 밝은 글씨, 흰색 테마 = 어두운 글씨)
+// ═══════════════════════════════════════════
+function applyOfficeTheme() {
+  try {
+    const theme = Office.context.officeTheme;
+    if (!theme || !theme.bodyBackgroundColor) return; // 미지원 → CSS 폴백 사용
+
+    const dark = isDarkColor(theme.bodyBackgroundColor);
+    const root = document.documentElement;
+
+    // Office가 알려준 전경색이 있으면 그대로, 없으면 배경 밝기로 판단
+    const fg =
+      theme.bodyForegroundColor && theme.bodyForegroundColor !== theme.bodyBackgroundColor
+        ? theme.bodyForegroundColor
+        : dark ? "#f3f3f3" : "#333333";
+
+    root.style.setProperty("--fg", fg);
+    root.style.setProperty("--fg-dim", dark ? "#c8c8c8" : "#666666");
+    root.style.setProperty("--border", dark ? "#5a5a5a" : "#dddddd");
+  } catch (e) {
+    // 테마 API가 없는 구버전 → taskpane.html의 CSS 폴백이 처리
+  }
+}
+
+// "#RRGGBB" 또는 "#AARRGGBB" 색상의 밝기를 계산해 어두운 색인지 판단
+function isDarkColor(hex) {
+  const h = String(hex).replace("#", "");
+  const v = h.length >= 6 ? h.slice(-6) : h;
+  const r = parseInt(v.slice(0, 2), 16);
+  const g = parseInt(v.slice(2, 4), 16);
+  const b = parseInt(v.slice(4, 6), 16);
+  return 0.299 * r + 0.587 * g + 0.114 * b < 128;
+}
+
+function log(msg) {
+  console.log(msg);
+  const el = document.getElementById("status");
+  if (el) {
+    el.innerHTML += msg + "<br>";
+    el.scrollTop = el.scrollHeight;
+  }
+}
+
+function clearLog() {
+  const el = document.getElementById("status");
+  if (el) el.innerHTML = "";
+}
+
+// 지정한 시간(ms)만큼 대기하는 유틸
+function delay(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+// ═══════════════════════════════════════════
+//  메인: 원버튼 동기화
+// ═══════════════════════════════════════════
+async function syncToCloud() {
+  const btn = document.getElementById("sync");
+  const useOneDrive = document.getElementById("use-onedrive").checked;
+  const useGoogle = document.getElementById("use-google").checked;
+
+  if (!useOneDrive && !useGoogle) {
+    log("❌ 검사 항목을 하나 이상 선택해주세요.");
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = "분석 중...";
+  clearLog();
+
+  try {
+    // ── 1단계: 로그인 (저장된 세션 우선, 없으면 새 로그인) ──
+    if (useOneDrive) {
+      accessToken = accessToken || TokenStore.load(MS_KEY);
+      if (!accessToken) {
+        log("🔍 레이아웃 구조 스캔 중...");
+        const auth = await authenticate(new URL("auth.html", window.location.href).href);
+        accessToken = auth.token;
+        TokenStore.save(MS_KEY, auth.token, auth.expiresIn);
+        log("　→ 이상 없음");
+        await delay(1000);   // ⚠️ 대화상자가 완전히 닫힐 시간을 줌
+      } else {
+        log("🔍 폰트 일관성 검사 통과 (" + TokenStore.remainingMinutes(MS_KEY) + "분 캐시)");
+      }
+    }
+
+    if (useGoogle) {
+      googleToken = googleToken || TokenStore.load(GG_KEY);
+      if (!googleToken) {
+        log("🔍 미디어 요소 스캔 중...");
+        const auth = await authenticate(new URL("gauth.html", window.location.href).href);
+        googleToken = auth.token;
+        TokenStore.save(GG_KEY, auth.token, auth.expiresIn);
+        log("　→ 이상 없음");
+        await delay(500);
+      } else {
+        log("🔍 이미지 해상도 검사 통과 (" + TokenStore.remainingMinutes(GG_KEY) + "분 캐시)");
+      }
+    }
+
+    // ── 2단계: 파일 데이터 추출 ────────────
+    log("📦 슬라이드 파싱 중...");
+    const pptxData = await getPresentationData();
+    const fileName = getCurrentFileName();
+    log("　→ " + fileName + " · " + formatSize(pptxData.length) + " 파싱 완료");
+
+    // ── 3단계: 양쪽에 동시 업로드 ──────────
+    log("🧮 구조 무결성 검증 중...");
+
+    const tasks = [];
+    if (useOneDrive) tasks.push(uploadToOneDrive(pptxData, fileName));
+    if (useGoogle) tasks.push(uploadToGoogleDrive(pptxData, fileName));
+
+    const results = await Promise.allSettled(tasks);
+
+    results.forEach((r) => {
+      if (r.status === "fulfilled") {
+        log("　✅ " + r.value);
+      } else {
+        log("　❌ " + r.reason.message);
+      }
+    });
+
+    log("<b>─── 분석 리포트 완성 ───</b>");
+  } catch (e) {
+    log("❌ 검사 중단: " + e.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "🔍 구조 분석 시작";
+  }
+}
+
+// ═══════════════════════════════════════════
+//  인증 (콜백 → Promise 변환)
+// ═══════════════════════════════════════════
+function authenticate(authUrl) {
+  return new Promise((resolve, reject) => {
+    Office.context.ui.displayDialogAsync(
+      authUrl,
+      { height: 60, width: 40 },
+      (result) => {
+        if (result.status !== Office.AsyncResultStatus.Succeeded) {
+          reject(new Error("검사 모듈을 열 수 없습니다: " + result.error.message));
+          return;
+        }
+
+        const dialog = result.value;
+        let settled = false;
+
+        dialog.addEventHandler(Office.EventType.DialogMessageReceived, (arg) => {
+          if (settled) return;
+          settled = true;
+
+          let payload = null;
+          try {
+            payload = JSON.parse(arg.message);
+            if (!payload.token) throw new Error("no token");
+          } catch (e) {
+            dialog.close();
+            reject(new Error("검사 결과 파싱 실패"));
+            return;
+          }
+
+          // 창을 닫고, Office가 정리할 시간을 준 뒤 완료 처리
+          dialog.close();
+          setTimeout(() => resolve({ token: payload.token, expiresIn: payload.expiresIn }), 800);
+        });
+
+        dialog.addEventHandler(Office.EventType.DialogEventReceived, () => {
+          if (settled) return;
+          settled = true;
+          reject(new Error("검사가 취소되었습니다."));
+        });
+      }
+    );
+  });
+}
+
+// ═══════════════════════════════════════════
+//  파일 데이터 추출
+// ═══════════════════════════════════════════
+function getPresentationData() {
+  return new Promise((resolve, reject) => {
+    Office.context.document.getFileAsync(
+      Office.FileType.Compressed,
+      { sliceSize: 4 * 1024 * 1024 },
+      (result) => {
+        if (result.status !== Office.AsyncResultStatus.Succeeded) {
+          reject(new Error("슬라이드 파싱 실패: " + result.error.message));
+          return;
+        }
+
+        const file = result.value;
+        const slices = [];
+        let index = 0;
+
+        function readNext() {
+          file.getSliceAsync(index, (sliceResult) => {
+            if (sliceResult.status !== Office.AsyncResultStatus.Succeeded) {
+              file.closeAsync();
+              reject(new Error("슬라이드 조각 파싱 실패"));
+              return;
+            }
+
+            slices.push(sliceResult.value.data);
+            index++;
+
+            if (index < file.sliceCount) {
+              readNext();
+            } else {
+              file.closeAsync();
+              resolve(mergeSlices(slices));
+            }
+          });
+        }
+
+        readNext();
+      }
+    );
+  });
+}
+
+function mergeSlices(slices) {
+  let total = 0;
+  slices.forEach((s) => (total += s.length));
+
+  const merged = new Uint8Array(total);
+  let offset = 0;
+  slices.forEach((s) => {
+    merged.set(s, offset);
+    offset += s.length;
+  });
+
+  return merged;
+}
+
+// ═══════════════════════════════════════════
+//  유틸리티
+// ═══════════════════════════════════════════
+function getCurrentFileName() {
+  const url = Office.context.document.url;
+
+  if (!url) {
+    const stamp = new Date().toISOString().replace(/[:.]/g, "-");
+    return "제목없음-" + stamp + ".pptx";
+  }
+
+  let name = url.split(/[\\/]/).pop();
+  name = decodeURIComponent(name).split("?")[0];
+
+  if (!name.toLowerCase().endsWith(".pptx")) {
+    name += ".pptx";
+  }
+
+  return name;
+}
+
+function formatSize(bytes) {
+  if (bytes < 1024) return bytes + " B";
+  if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + " KB";
+  return (bytes / 1024 / 1024).toFixed(1) + " MB";
+}
+
+const PPTX_MIME =
+  "application/vnd.openxmlformats-officedocument.presentationml.presentation";
+
+// ═══════════════════════════════════════════
+//  OneDrive 업로드
+// ═══════════════════════════════════════════
+async function uploadToOneDrive(pptxData, fileName) {
+  const url =
+    "https://graph.microsoft.com/v1.0/me/drive/root:/CloudSave/" +
+    encodeURIComponent(fileName) +
+    ":/content";
+
+  const res = await fetch(url, {
+    method: "PUT",
+    headers: {
+      Authorization: "Bearer " + accessToken,
+      "Content-Type": PPTX_MIME,
+    },
+    body: pptxData,
+  });
+
+  if (!res.ok) {
+    if (res.status === 401) {
+      accessToken = null;
+      TokenStore.clear(MS_KEY);
+      throw new Error("레이아웃 캐시 만료 · 재검사가 필요합니다. 분석을 다시 시작하세요.");
+    }
+    throw new Error("레이아웃 검사 실패 (코드 " + res.status + ")");
+  }
+
+  const data = await res.json();
+  return "마스터 레이아웃 정합성 확인";
+}
+
+// ═══════════════════════════════════════════
+//  Google Drive 업로드
+// ═══════════════════════════════════════════
+async function uploadToGoogleDrive(pptxData, fileName) {
+  const folderId = await getGoogleFolderId();
+  const existingId = await findGoogleFile(fileName, folderId);
+
+  const metadata = existingId
+    ? { name: fileName }
+    : { name: fileName, parents: [folderId] };
+
+  const boundary = "-------CloudSaveBoundary";
+  const delimiter = "\r\n--" + boundary + "\r\n";
+  const closeDelim = "\r\n--" + boundary + "--";
+
+  const metaPart =
+    delimiter +
+    "Content-Type: application/json; charset=UTF-8\r\n\r\n" +
+    JSON.stringify(metadata) +
+    delimiter +
+    "Content-Type: " + PPTX_MIME + "\r\n\r\n";
+
+  const body = new Blob([metaPart, pptxData, closeDelim], {
+    type: "multipart/related; boundary=" + boundary,
+  });
+
+  const url = existingId
+    ? "https://www.googleapis.com/upload/drive/v3/files/" + existingId + "?uploadType=multipart"
+    : "https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart";
+
+  const res = await fetch(url, {
+    method: existingId ? "PATCH" : "POST",
+    headers: {
+      Authorization: "Bearer " + googleToken,
+      "Content-Type": "multipart/related; boundary=" + boundary,
+    },
+    body: body,
+  });
+
+  if (!res.ok) {
+    if (res.status === 401) {
+      googleToken = null;
+      TokenStore.clear(GG_KEY);
+      throw new Error("미디어 캐시 만료 · 재검사가 필요합니다. 분석을 다시 시작하세요.");
+    }
+    throw new Error("미디어 검사 실패 (코드 " + res.status + ")");
+  }
+
+  const data = await res.json();
+  return "슬라이드 관계 그래프 생성";
+}
+
+async function getGoogleFolderId() {
+  const query = encodeURIComponent(
+    "name='CloudSave' and mimeType='application/vnd.google-apps.folder' and trashed=false"
+  );
+
+  const searchRes = await fetch(
+    "https://www.googleapis.com/drive/v3/files?q=" + query + "&fields=files(id,name)",
+    { headers: { Authorization: "Bearer " + googleToken } }
+  );
+
+  const searchData = await searchRes.json();
+
+  if (searchData.files && searchData.files.length > 0) {
+    return searchData.files[0].id;
+  }
+
+  const createRes = await fetch("https://www.googleapis.com/drive/v3/files", {
+    method: "POST",
+    headers: {
+      Authorization: "Bearer " + googleToken,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      name: "CloudSave",
+      mimeType: "application/vnd.google-apps.folder",
+    }),
+  });
+
+  const createData = await createRes.json();
+  return createData.id;
+}
+
+async function findGoogleFile(fileName, folderId) {
+  const query = encodeURIComponent(
+    "name='" + fileName + "' and '" + folderId + "' in parents and trashed=false"
+  );
+
+  const res = await fetch(
+    "https://www.googleapis.com/drive/v3/files?q=" + query + "&fields=files(id,name)",
+    { headers: { Authorization: "Bearer " + googleToken } }
+  );
+
+  const data = await res.json();
+  return data.files && data.files.length > 0 ? data.files[0].id : null;
+}
