@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0" xmlns:ov="http://schemas.microsoft.com/office/taskpaneappversionoverrides" xsi:type="TaskPaneApp">
+  <Id>1a68110e-a276-4a0e-8d47-4c49d915600d</Id>
+  <Version>1.0.0.0</Version>
+  <ProviderName>Techevansh</ProviderName>
+  <DefaultLocale>en-US</DefaultLocale>
+  <DisplayName DefaultValue="PPTX 분석도구"/>
+  <Description DefaultValue="슬라이드 구성과 레이아웃 정합성을 검사합니다."/>
+  <IconUrl DefaultValue="https://techevansh.github.io/cloudsave/assets/icon-32.png"/>
+  <HighResolutionIconUrl DefaultValue="https://techevansh.github.io/cloudsave/assets/icon-64.png"/>
+  <SupportUrl DefaultValue="https://techevansh.github.io/cloudsave/"/>
+  <AppDomains>
+    <AppDomain>https://techevansh.github.io</AppDomain>
+    <AppDomain>https://login.microsoftonline.com</AppDomain>
+    <AppDomain>https://accounts.google.com</AppDomain>
+  </AppDomains>
+  <Hosts>
+    <Host Name="Presentation"/>
+  </Hosts>
+  <DefaultSettings>
+    <SourceLocation DefaultValue="https://techevansh.github.io/cloudsave/taskpane.html"/>
+  </DefaultSettings>
+  <Permissions>ReadWriteDocument</Permissions>
+  <VersionOverrides xmlns="http://schemas.microsoft.com/office/taskpaneappversionoverrides" xsi:type="VersionOverridesV1_0">
+    <Hosts>
+      <Host xsi:type="Presentation">
+        <DesktopFormFactor>
+          <GetStarted>
+            <Title resid="GetStarted.Title"/>
+            <Description resid="GetStarted.Description"/>
+            <LearnMoreUrl resid="GetStarted.LearnMoreUrl"/>
+          </GetStarted>
+          <FunctionFile resid="Commands.Url"/>
+          <ExtensionPoint xsi:type="PrimaryCommandSurface">
+            <OfficeTab id="TabHome">
+              <Group id="CommandsGroup">
+                <Label resid="CommandsGroup.Label"/>
+                <Icon>
+                  <bt:Image size="16" resid="Icon.16x16"/>
+                  <bt:Image size="32" resid="Icon.32x32"/>
+                  <bt:Image size="80" resid="Icon.80x80"/>
+                </Icon>
+                <Control xsi:type="Button" id="TaskpaneButton">
+                  <Label resid="TaskpaneButton.Label"/>
+                  <Supertip>
+                    <Title resid="TaskpaneButton.Label"/>
+                    <Description resid="TaskpaneButton.Tooltip"/>
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16x16"/>
+                    <bt:Image size="32" resid="Icon.32x32"/>
+                    <bt:Image size="80" resid="Icon.80x80"/>
+                  </Icon>
+                  <Action xsi:type="ShowTaskpane">
+                    <TaskpaneId>ButtonId1</TaskpaneId>
+                    <SourceLocation resid="Taskpane.Url"/>
+                  </Action>
+                </Control>
+              </Group>
+            </OfficeTab>
+          </ExtensionPoint>
+        </DesktopFormFactor>
+      </Host>
+    </Hosts>
+    <Resources>
+      <bt:Images>
+        <bt:Image id="Icon.16x16" DefaultValue="https://techevansh.github.io/cloudsave/assets/icon-16.png"/>
+        <bt:Image id="Icon.32x32" DefaultValue="https://techevansh.github.io/cloudsave/assets/icon-32.png"/>
+        <bt:Image id="Icon.80x80" DefaultValue="https://techevansh.github.io/cloudsave/assets/icon-80.png"/>
+      </bt:Images>
+      <bt:Urls>
+        <bt:Url id="GetStarted.LearnMoreUrl" DefaultValue="https://go.microsoft.com/fwlink/?LinkId=276812"/>
+        <bt:Url id="Commands.Url" DefaultValue="https://techevansh.github.io/cloudsave/commands.html"/>
+        <bt:Url id="Taskpane.Url" DefaultValue="https://techevansh.github.io/cloudsave/taskpane.html"/>
+      </bt:Urls>
+      <bt:ShortStrings>
+        <bt:String id="GetStarted.Title" DefaultValue="PPTX 구조 분석기 설치 완료!"/>
+        <bt:String id="CommandsGroup.Label" DefaultValue="문서도구"/>
+        <bt:String id="TaskpaneButton.Label" DefaultValue="PPTX analyzer"/>
+      </bt:ShortStrings>
+      <bt:LongStrings>
+        <bt:String id="GetStarted.Description" DefaultValue="홈 탭의 '구조 분석기' 버튼을 눌러 검사를 시작하세요."/>
+        <bt:String id="TaskpaneButton.Tooltip" DefaultValue="슬라이드 구조와 레이아웃 정합성을 검사합니다"/>
+      </bt:LongStrings>
+    </Resources>
+  </VersionOverrides>
+</OfficeApp>
