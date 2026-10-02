@@ -348,22 +348,121 @@ const PPTX_MIME =
   "application/vnd.openxmlformats-officedocument.presentationml.presentation";
 
 // ═══════════════════════════════════════════
-//  OneDrive 업로드
+//  폴더 계층 승계 (2026-10-02 추가)
+//  열린 문서의 경로에서 하위 폴더 구조를 추출해 OneDrive/Google Drive의
+//  CloudSave 아래에 그대로 재현한다. 경로를 알 수 없으면(빈 문자열) 기존처럼
+//  CloudSave 최상위에 평평하게 저장한다(동작 폴백).
+// ═══════════════════════════════════════════
+function getRelativeFolder() {
+  try {
+    const url = Office.context.document.url;
+    if (!url) return "";
+    let p = decodeURIComponent(url).split("?")[0];
+    p = p.replace(/^file:\/+/i, ""); // file:///U:/... → U:/...
+    const parts = p.split(/[\\/]+/).filter(Boolean);
+    if (parts.length <= 2) return ""; // 드라이브 + 파일명뿐
+    const folders = parts.slice(1, parts.length - 1); // 드라이브/호스트와 파일명 제거
+    return folders
+      .map((s) => s.replace(/[:*?"<>|]/g, "_").trim())
+      .filter(Boolean)
+      .join("/");
+  } catch (e) {
+    return "";
+  }
+}
+
+function putOneDrive(relPath, data) {
+  const encoded = relPath.split("/").map(encodeURIComponent).join("/");
+  return fetch(
+    "https://graph.microsoft.com/v1.0/me/drive/root:/CloudSave/" + encoded + ":/content",
+    {
+      method: "PUT",
+      headers: { Authorization: "Bearer " + accessToken, "Content-Type": PPTX_MIME },
+      body: data,
+    }
+  );
+}
+
+async function ensureOneDriveFolder(parentPath, name) {
+  const base = parentPath
+    ? "root:/" + parentPath.split("/").map(encodeURIComponent).join("/") + ":"
+    : "root";
+  try {
+    await fetch("https://graph.microsoft.com/v1.0/me/drive/" + base + "/children", {
+      method: "POST",
+      headers: { Authorization: "Bearer " + accessToken, "Content-Type": "application/json" },
+      body: JSON.stringify({ name: name, folder: {}, "@microsoft.graph.conflictBehavior": "fail" }),
+    });
+  } catch (e) {
+    /* 이미 존재(409) 등은 무시 */
+  }
+}
+
+async function ensureOneDrivePath(folder) {
+  await ensureOneDriveFolder("", "CloudSave");
+  let cur = "CloudSave";
+  if (folder) {
+    for (const seg of folder.split("/")) {
+      if (!seg) continue;
+      await ensureOneDriveFolder(cur, seg);
+      cur += "/" + seg;
+    }
+  }
+}
+
+async function findOrCreateGoogleFolder(name, parentId) {
+  const safe = name.replace(/'/g, "\\'");
+  const q = encodeURIComponent(
+    "name='" + safe + "' and mimeType='application/vnd.google-apps.folder' and '" + parentId + "' in parents and trashed=false"
+  );
+  const r = await fetch(
+    "https://www.googleapis.com/drive/v3/files?q=" + q + "&fields=files(id,name)",
+    { headers: { Authorization: "Bearer " + googleToken } }
+  );
+  const d = await r.json();
+  if (d.files && d.files.length > 0) return d.files[0].id;
+
+  const c = await fetch("https://www.googleapis.com/drive/v3/files", {
+    method: "POST",
+    headers: { Authorization: "Bearer " + googleToken, "Content-Type": "application/json" },
+    body: JSON.stringify({
+      name: name,
+      mimeType: "application/vnd.google-apps.folder",
+      parents: [parentId],
+    }),
+  });
+  const cd = await c.json();
+  return cd.id;
+}
+
+async function ensureGoogleFolderPath(folder) {
+  let parent = await getGoogleFolderId(); // CloudSave 루트
+  if (folder) {
+    for (const seg of folder.split("/")) {
+      if (!seg) continue;
+      parent = await findOrCreateGoogleFolder(seg, parent);
+    }
+  }
+  return parent;
+}
+
+// ═══════════════════════════════════════════
+//  OneDrive 업로드 (폴더 계층 승계 + 실패 시 평평 폴백)
 // ═══════════════════════════════════════════
 async function uploadToOneDrive(pptxData, fileName) {
-  const url =
-    "https://graph.microsoft.com/v1.0/me/drive/root:/CloudSave/" +
-    encodeURIComponent(fileName) +
-    ":/content";
+  const folder = getRelativeFolder();
+  try {
+    await ensureOneDrivePath(folder);
+  } catch (e) {
+    /* 폴더 생성 실패 → 아래에서 평평 저장으로 폴백 */
+  }
 
-  const res = await fetch(url, {
-    method: "PUT",
-    headers: {
-      Authorization: "Bearer " + accessToken,
-      "Content-Type": PPTX_MIME,
-    },
-    body: pptxData,
-  });
+  const relPath = (folder ? folder + "/" : "") + fileName;
+  let res = await putOneDrive(relPath, pptxData);
+  if (!res.ok && res.status !== 401 && folder) {
+    // 계층 경로 업로드 실패 시 CloudSave 최상위로 폴백
+    res = await putOneDrive(fileName, pptxData);
+  }
 
   if (!res.ok) {
     if (res.status === 401) {
@@ -382,7 +481,12 @@ async function uploadToOneDrive(pptxData, fileName) {
 //  Google Drive 업로드
 // ═══════════════════════════════════════════
 async function uploadToGoogleDrive(pptxData, fileName) {
-  const folderId = await getGoogleFolderId();
+  let folderId;
+  try {
+    folderId = await ensureGoogleFolderPath(getRelativeFolder());
+  } catch (e) {
+    folderId = await getGoogleFolderId(); // 계층 생성 실패 → CloudSave 최상위로 폴백
+  }
   const existingId = await findGoogleFile(fileName, folderId);
 
   const metadata = existingId
